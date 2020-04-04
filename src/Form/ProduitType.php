@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Marques;
 use App\Entity\Produit;
 use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
@@ -30,6 +31,10 @@ class ProduitType extends AbstractType
                 ])
             ->add('categories', EntityType::class, [
                 "class" => Categories::class,
+                "choice_label" => "libelle"
+            ])
+            ->add('marques', EntityType::class, [
+                "class" => Marques::class,
                 "choice_label" => "libelle"
             ])
         ;
