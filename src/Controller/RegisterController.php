@@ -35,7 +35,6 @@ class RegisterController extends AbstractController
             );
             $time = new \DateTime('now');
             $user->setRegisterAt($time);
-            $user->setRoles("ROLE_TEST");
             $user->setStatut(0);
             $user->setToken($this->generateToken());
             $entityManager = $this->getDoctrine()->getManager();

@@ -63,9 +63,9 @@ class AdminController extends AbstractController
 
         if( $form->isSubmitted() && $form->isValid() )
         {
-            if(!$produit->getImageFile()){
-                $produit->setImage('imageDefault.png');
-            }
+            // if(!$produit->getImageFile()){
+            //     $produit->setImage('imageDefault.png');
+            // }
             $produit->setUpdatedAt(new \DateTime('now'));
             $entityManagerInterface->persist($produit);
             $entityManagerInterface->flush();

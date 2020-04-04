@@ -48,7 +48,7 @@ class Produit
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private $image = 'imageDefault.png';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="categorie")

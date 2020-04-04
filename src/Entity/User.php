@@ -99,7 +99,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $roles;
+    private $roles = 'ROLE_REGISTER';
 
     /**
      * @var string The hashed password
