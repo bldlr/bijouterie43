@@ -69,7 +69,9 @@ class ProduitsController extends AbstractController
     public function produit(Produit $produit)
     {
         return $this->render('produits/produit.html.twig', [
-        'produit' => $produit
+        'produit' => $produit,
+        'user' => $this->getUser()
+        
         ]);
     }
 
