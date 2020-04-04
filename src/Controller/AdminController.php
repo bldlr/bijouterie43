@@ -10,6 +10,9 @@ use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -83,7 +86,7 @@ class AdminController extends AbstractController
      * 
      * @Route("/modification_bijoux/{id}", name="modificationProduit", methods="GET|POST")
      */
-    public function modification(Produit $produit, Request $request, EntityManagerInterface $entityManagerInterface)
+    public function modification(Produit $produit, Request $request, EntityManagerInterface $entityManagerInterface, CacheManager $cacheManager, UploaderHelper $helper)
     {
         $form = $this->createForm(ProduitType::class, $produit);
 
@@ -91,6 +94,11 @@ class AdminController extends AbstractController
 
         if( $form->isSubmitted() && $form->isValid() )
         {
+            if($produit->getImageFile() instanceof UploadedFile)
+            {
+                $cacheManager->remove($helper->asset($produit, "imageFile"));
+            }
+
             $entityManagerInterface->persist($produit);
             $entityManagerInterface->flush();
             $this->addFlash("modificationProduit", "La modification a été effectuée");
@@ -111,10 +119,11 @@ class AdminController extends AbstractController
      * 
      * @Route("/suppression_bijoux/{id}", name="suppressionProduit", methods="delete")
      */
-    public function suppressionProduit(Produit $produit, Request $request, EntityManagerInterface $entityManagerInterface)
+    public function suppressionProduit(Produit $produit, Request $request, EntityManagerInterface $entityManagerInterface, CacheManager $cacheManager, UploaderHelper $helper)
     {
         if($this->isCsrfTokenValid("SUP". $produit->getId(), $request->get('_token') ))
         {
+        $cacheManager->remove($helper->asset($produit, "imageFile"));    
         $entityManagerInterface->remove($produit);
         $entityManagerInterface->flush();
         $this->addFlash("suppressionProduit", "La suppression a été effectuée");
