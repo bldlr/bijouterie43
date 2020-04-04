@@ -36,7 +36,8 @@ public function findSearch(SearchData $search): array
     $query = $this
         ->createQueryBuilder('p')
         ->select('c', 'p') // selectionne toutes les infos liées aux catégories mais aussi aux produits (moins de requètes)
-        ->join('p.categories', 'c');
+        ->join('p.categories', 'c')
+        ->join('p.marques', 'm');
         //->orderBy('p.id', 'ASC');
 
         if(!empty($search->q))
@@ -66,6 +67,13 @@ public function findSearch(SearchData $search): array
             $query = $query
             ->andWhere('c.id IN (:categories)')
             ->setParameter('categories', $search->categories);
+        }
+
+        if(!empty($search->marques))
+        {
+            $query = $query
+            ->andWhere('m.id IN (:marques)')
+            ->setParameter('marques', $search->marques);
         }
 
         if(!empty($search->sexe))

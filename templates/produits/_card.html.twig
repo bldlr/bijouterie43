@@ -2,9 +2,9 @@
                         <div class="rounded p-2 clearfix" style="box-shadow : 2px 2px 6px">
                         
                             <h5 style="min-height: 80px;" class="text-center"><a href="{{ path('produit', {'id':produit.id}) }}">{{ produit.nom }}</a></h5>
-                                
+                              
                             <img class="img-fluid rounded" src="{{asset('images/produits/' ~ produit.image)}}" alt="Image de {{ produit.nom }}">
-                            
+                            <h6 class="text-center">{{ produit.marques }}</h6>  
                             <hr>
 
                             <div>

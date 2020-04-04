@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Marques;
 use App\Data\SearchData;
 use App\Entity\Categories;
 use Symfony\Component\Form\AbstractType;
@@ -32,6 +33,14 @@ class SearchForm extends AbstractType // Symfony saura qu'on est en présence d'
                         'label' => false,
                         'required' => false,
                         'class' => Categories::class,
+                        'expanded' => true, // liste de chechbox : expanded et multiple
+                        'multiple' => true
+                    ])
+
+                    ->add('marques', EntityType::class, [
+                        'label' => false,
+                        'required' => false,
+                        'class' => Marques::class,
                         'expanded' => true, // liste de chechbox : expanded et multiple
                         'multiple' => true
                     ])

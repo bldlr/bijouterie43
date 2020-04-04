@@ -68,6 +68,12 @@ class Produit
     
     private $imageFile;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Marques", inversedBy="produits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $marques;
+
     public function getImageFile(): ?File
     {
         return $this->imageFile;
@@ -185,6 +191,18 @@ class Produit
     {
         $this->updated_at = $updated_at;
         
+        return $this;
+    }
+
+    public function getMarques(): ?marques
+    {
+        return $this->marques;
+    }
+
+    public function setMarques(?marques $marques): self
+    {
+        $this->marques = $marques;
+
         return $this;
     }
 }
