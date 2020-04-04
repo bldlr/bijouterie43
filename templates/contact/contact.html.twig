@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block monTitre %}Nous contacter
+{% endblock %}
+
+
+{% block body %}
+        <div class="">
+
+
+
+            ​
+            <div class="formulaire col-md-6 col-sm-10 col-xs-10 mx-auto m-5 p-3" id="">
+                {{form_start(form)}}
+                <div class="row">
+                    <div class="col-6">
+                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.email) }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ form_row(form.objet) }}
+                        {{ form_row(form.message) }}
+                        <div class="form-group">
+                            <button class="btn btn-info" type="submit" action="">Envoyer !</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                {{form_end(form)}}
+
+
+                <a href="{{ path('accueil') }}" class="btn btn-primary col-6 d-block mx-auto">Retour à l'accueil</a>
+
+            </div>
+        </div>
+{% endblock %}

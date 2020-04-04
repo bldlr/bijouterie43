@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Membres{% endblock %}
+{% block monTitre %}Membres{% endblock %}
+{% block body %}
+
+    <table class="table table-hover text-center">
+
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th><img style="width:20px" src="{{ asset("images/trash.png") }}"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for membre in membres %}
+                <tr>
+                    <td>{{membre.nom|capitalize}}</td>
+                    <td>{{membre.prenom|capitalize}}</td>
+                    <td>{{membre.adresse}}</td>
+                    <td>{{membre.codePostal}}</td>
+                    <td>{{membre.ville|capitalize}}</td>
+                    <td>{{membre.telephone}}</td>
+                    <td>{{membre.email}}</td>
+                    <td>
+                    
+
+                        <form method="POST" class="col" action="{{ path("suppressionUser", {'id' : membre.id}) }}" onsubmit="return confirm('Confirmez-vous la suppression de ce membre ?')">
+                            <input type="hidden" name="_method" value="delete"> 
+                            <input type="hidden" name="_token" value="{{ csrf_token('SUP' ~ membre.id ) }}"> 
+                            <input type="submit" class="btn btn-danger col-12 text-center p-0" value="x"> 
+                        </form>
+                    
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

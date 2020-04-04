@@ -1,0 +1,14 @@
+.realisationImages{
+    width:100%;
+}
+
+.bcgCard{
+    background: #F8F8FF;
+}
+
+
+.filter{
+    display: block;
+    position: sticky;
+    top: 20px;
+}

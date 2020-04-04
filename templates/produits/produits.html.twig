@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block monTitre %}Nos bijoux{% endblock %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3">
+            {% include 'produits/_filter.html.twig' with {form: form} only %}
+            <!-- PARTIE FILTRE -->
+        </div>
+
+        <div class="col-md-9">
+            <div class="containerInfini">
+                <div class="row itemInfini">
+                {% for produit in produits %}
+                    {% include 'produits/_card.html.twig' with {produit: produit} only %}
+                    <!-- PARTIE CARD DES PRODUITS -->
+                    
+                {% endfor %}
+
+
+                </div>
+
+                <div class="spinner-border mx-auto d-block mt-2 mb-2 load" style="display:none !important;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{# <!-- PARTIE PAGINATION  -->
+<div class="paginationInfini">
+{% for i in range(1, nbPage) %}
+    {% if i == pageCourante %}
+    {{ i }}
+    {% elseif i == pageCourante + 1 %}
+    <a href="{{ path('bijoux', {"page" : i} )}}" class="nextInfini">{{i}}</a>;
+    {% endif %}
+{% endfor %}
+</div> #}
+
+
+
+
+
+<script src="https://unpkg.com/@webcreate/infinite-ajax-scroll/dist/infinite-ajax-scroll.min.js"></script>
+<!-- SCRIPT AJAX POUR LE SCROLL INFINI QUI SE BASE SUR UNE PAGINATION  -->
+
+
+<script>
+
+let ias = new InfiniteAjaxScroll('.containerInfini', { // CONTAINER : LA PARTIE Où IL Y A LES PRODUITS
+  item: '.itemInfini', // LA BOUCLE DES PRODUITS
+  next: '.nextInfini', // EN FIN DE SCROLL AFFICHAGE DE LA PAGE N+1
+  pagination: '.paginationInfini' // CLASS QUI N AFFICHE PAS LA PAGINATION
+});
+
+
+</script>
+{# <script>
+    if($(window)).scrollTop() == $(document).height() - $(window).height())
+    {
+        if(html)
+        {
+            $('.load').show();
+
+        }
+        else{
+            alert("test");
+        }
+    }
+</script> #}
+
+{% endblock %}
