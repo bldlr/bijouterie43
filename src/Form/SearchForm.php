@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class SearchForm extends AbstractType // Symfony saura qu'on est en présence d'un formulaire
 {
@@ -35,6 +36,17 @@ class SearchForm extends AbstractType // Symfony saura qu'on est en présence d'
                         'multiple' => true
                     ])
                     
+                    ->add('sexe', ChoiceType::class, [
+                        'label' => false,
+                        'required' => false,
+                        'expanded' => true, // liste de chechbox : expanded et multiple
+                        'multiple' => true,
+                        'choices' => [
+                            'Homme' => 'homme',
+                            'Femme' => 'femme',
+                        ]
+                    ])
+
                     ->add('min', NumberType::class, [
                         'label' => false,
                         'required' => false,

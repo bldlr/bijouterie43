@@ -40,4 +40,3 @@ class PasswordUpdateType extends AbstractType
         ]);
     }
 }
-

@@ -46,26 +46,12 @@ class SearchData
      * @var string
      */
         public $ordre;
-// PROBLEME POUR LA PARTIE ORDRE
-
-        // public function getOrdre(): ?int
-        // {
-        //     return $this->ordre;
-        // }
-    
-        // public function setOrdre(int $ordre): self
-        // {
-        //     $this->ordre = $ordre;
-    
-        //     return $this;
-        // }
-    
-        // public function getOrdreType(): string
-        // {
-        //     return self::TRI[$this->ordre];
-        // }
 
 
+    /**
+     * @var string
+     */
+        public $sexe;
 
  
 

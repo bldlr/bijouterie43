@@ -68,6 +68,13 @@ public function findSearch(SearchData $search): array
             ->setParameter('categories', $search->categories);
         }
 
+        if(!empty($search->sexe))
+        {
+            $query = $query
+            ->andWhere('p.genre IN (:sexe)')
+            ->setParameter('sexe', $search->sexe);
+        }
+
 
         if(!empty($ordre = $search->ordre))
         {
