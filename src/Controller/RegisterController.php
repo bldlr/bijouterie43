@@ -96,7 +96,7 @@ class RegisterController extends AbstractController
            
            $user->setToken(null);
            $user->setStatut(1);
-           $user->setRoles("ROLE_USER");
+           $user->setRoles(['ROLE_USER']);
            $em->persist($user);
            $em->flush();
 
@@ -120,14 +120,6 @@ class RegisterController extends AbstractController
 
         return $random;
     }
-
-
-
-
-
-
-
-
 
 
 

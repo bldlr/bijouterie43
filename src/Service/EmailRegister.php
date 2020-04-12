@@ -28,7 +28,7 @@ class EmailRegister
             ->setFrom(['copets2020@gmail.com'])
             ->setTo([$mail])
             ->setBody(
-                'Félicitations pour votre inscription à AdriverIo, voici votre Mot de passe : ' . $password . ' pensez à le changer lors de votre première connexion'
+                'Félicitations pour votre inscription à la bijouterie, voici votre Mot de passe : ' . $password . ' pensez à le changer lors de votre première connexion'
             );
         $this->mailer->send($message);
     }

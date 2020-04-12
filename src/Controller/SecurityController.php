@@ -24,9 +24,6 @@ class SecurityController extends AbstractController
      */
     public function connexion(AuthenticationUtils $util)
     {
-        if ($this->isGranted('ROLE_REGISTER')) {
-            $this -> addFlash('connexionImpossible', "Vous ne pouvez pas vous connecter car vous n'avez pas confirmé votre email.");
-        }
         return $this->render('security/connexion.html.twig',[
             "lastUserName" => $util->getLastUsername(),
             "error" =>$util->getLastAuthenticationError()
@@ -42,11 +39,13 @@ class SecurityController extends AbstractController
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('dashboard');
         }
-        elseif ($this->isGranted('ROLE_REGISTER')) {
-            return $this->redirectToRoute('connexion');
+        elseif ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('accueil');
         }
         else{
-            return $this->redirectToRoute('accueil'); 
+            $this -> addFlash('connexionImpossible', "Vous ne pouvez pas vous connecter car vous n'avez pas confirmé votre email.");
+            return $this->redirectToRoute('connexion'); 
+           
         }
 
         

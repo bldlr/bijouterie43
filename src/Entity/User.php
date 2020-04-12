@@ -97,9 +97,9 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $roles = 'ROLE_REGISTER';
+    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -251,13 +251,17 @@ class User implements UserInterface
         return $this;
     }
 
-
-    public function getRoles()
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return [$this->roles];
+        $roles = $this->roles;
+
+        return array_unique($roles);
     }
 
-    public function setRoles(string $roles): self
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -305,4 +309,6 @@ class User implements UserInterface
         return $this;
     }
 
+
+    
 }

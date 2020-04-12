@@ -18,10 +18,6 @@ security:
         main:
             anonymous: lazy
 
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
-
             provider: from_database
 
             form_login:
@@ -44,6 +40,15 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN}
          #- { path: ^/client, roles: ROLE_USER }
-         - { path: ^/login$, roles: ROLE_USER}
+         - { path: ^/login$, roles: ROLE_ALL}
+
+    role_hierarchy:
+
+            ROLE_ALL: [ROLE_USER, ROLE_ADMIN,  ROLE_ALLOWED_TO_SWITCH]
+
+
+            # ROLE REGISTER : PAS D'ACCES A LA CONNEXION => TU ES INSCRIS MAIS TU N'AS PAS CONFIRMÉ TON EMAIL (pas le droit de se connecter)
+            # ROLE USER : SI TU AS CONFIRMÉ TON ADRESSE EMAIL => TU AS LE DROIT D'ETRE CONNECTÉ
+            # ROLE ADMIN : C'EST A TOI DE LE MODIFIER DIRECTEMENT DANS LA TABLE
