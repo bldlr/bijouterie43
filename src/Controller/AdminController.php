@@ -143,10 +143,210 @@ class AdminController extends AbstractController
      */
     public function membres(UserRepository $repoUser)
     {
+
+
+         // GRAPHIQUE
+         $moisActuel = date("m"); // clé de départ, définir le mois actuel qui sera le mois de la dernière position du tableau
+         $anneeActuelle = date("Y"); // clé de départ, définir l'année actuel qui sera l'année de la dernière position du tableau
+         $tab24mois = []; // tableau regroupant les 12 mois de l'année actuelle + l'année passée, car les 12 mois se situeront sur cet interval
+         $janvier = 01; // définir janvier comme 1er mois de l'année, passage de décembre -> janvier : 12->1
+ 
+         //Création du tableau des 24 mois Y-1 + Y
+         for ($y = date("Y") - 1; $y <= date("Y"); $y++)
+         {
+             for ($m = 1; $m <= 12; $m++)
+             {
+                 $n = strlen($m) == 1 ? strval("0" . $m) : strval($m);
+                 $tab24mois[]  = $y . "-" . $n ;
+             }
+         }
+ 
+         // définir mois+1, prenant en compte l'année
+         if($moisActuel < 12)
+         {
+             if($moisActuel < 10 )
+             {
+                 $firstPosition = date( ($anneeActuelle-1) . '-0' . ($moisActuel +1));
+             }
+             else
+             {
+                 $firstPosition = date( ($anneeActuelle-1) . '-' . ($moisActuel +1));
+             }
+         }
+         else
+         {
+             $firstPosition = date( $anneeActuelle . '-0' . $janvier );
+         }
+ 
+ 
+         // Position du premier mois du graphique dans les 24 mois du tableau
+         $firstMonth = array_keys($tab24mois, $firstPosition);
+ 
+ 
+         foreach ($firstMonth as $value)
+         {
+             $valueFirstMonth = $value;
+         }
+         //Création du tableau des 12 mois dont la derniere position est le mois actuel
+         $tab12mois = array_slice($tab24mois, $valueFirstMonth, 12);
+
+         $mois1 = count($repoUser->findAllBefore($tab12mois[0]));
+         $mois2 = count($repoUser->findNumber($tab12mois[1]));
+         $mois3 = count($repoUser->findNumber($tab12mois[2]));
+         $mois4 = count($repoUser->findNumber($tab12mois[3]));
+         $mois5 = count($repoUser->findNumber($tab12mois[4]));
+         $mois6 = count($repoUser->findNumber($tab12mois[5]));
+         $mois7 = count($repoUser->findNumber($tab12mois[6]));
+         $mois8 = count($repoUser->findNumber($tab12mois[7]));
+         $mois9 = count($repoUser->findNumber($tab12mois[8]));
+         $mois10 = count($repoUser->findNumber($tab12mois[9]));
+         $mois11 = count($repoUser->findNumber($tab12mois[10]));
+         $mois12 = count($repoUser->findNumber($tab12mois[11]));
+
+         // PARTIE NOM/CHIFFRE DU MOIS
+         // Fournir la donnée du nom du mois en fonction de son numero pour le survol des graphiques
+         // ex 1 = janvier, 2 = février etc...
+         $boucleMois = [];
+         for ($i = 0; $i < 12; $i++)
+         {
+         // on se focalise sur les 2 derniers caractères des valeurs de tab12mois soit "MM" de date
+         $chiffreMois = intval(substr($tab12mois[$i], -2));
+         //dump($nomPremierMois);
+         
+         $boucleMois[] = $chiffreMois;
+ 
+         // on associe le chiffre à son nom de mois
+         switch($chiffreMois)
+         {
+             case 1 : 
+                $chiffreMois = "Janvier";
+             break;
+ 
+             case 2 : 
+                 $chiffreMois = "Février";
+             break;
+ 
+             case 3 : 
+                 $chiffreMois = "Mars";
+             break;
+ 
+             case 4 : 
+                 $chiffreMois = "Avril";
+             break;
+ 
+             case 5 : 
+                 $chiffreMois = "Mai";
+             break;
+ 
+             case 6 : 
+                 $chiffreMois = "Juin";
+             break;
+ 
+             case 7 : 
+                 $chiffreMois = "Juillet";
+             break;
+ 
+             case 8 : 
+                 $chiffreMois = "Août";
+             break;
+ 
+             case 9 : 
+                 $chiffreMois = "Septembre";
+             break;
+ 
+             case 10 : 
+                 $chiffreMois = "Octobre";
+             break;
+ 
+             case 11 : 
+                 $chiffreMois = "Novembre";
+             break;
+ 
+             case 12 : 
+                 $chiffreMois = "Décembre";
+             break;
+ 
+             default;
+         }
+         
+         $nomMois[] = $chiffreMois;
+     }
+
+ 
+         // le tableau User regroupe les 12 positions avec le nombre de Users mais également le numero du mois pour le label
+         $tabGraph= [
+ 
+            0 =>[
+             $mois1,
+             substr($tab12mois[0], -2),
+             $nomMois[0]
+            ],  
+            1 =>[
+             $mois2,
+             substr($tab12mois[1], -2),
+             $nomMois[1]
+            ],  
+            2 =>[
+             $mois3,
+             substr($tab12mois[2], -2),
+             $nomMois[2]
+            ],  
+            3 =>[
+             $mois4,
+             substr($tab12mois[3], -2),
+             $nomMois[3]
+            ],  
+            4 =>[
+             $mois5,
+             substr($tab12mois[4], -2),
+             $nomMois[4]
+            ],
+            5 =>[
+             $mois6,
+             substr($tab12mois[5], -2),
+             $nomMois[5]
+            ],  
+            6 =>[
+             $mois7,
+             substr($tab12mois[6], -2),
+             $nomMois[6]
+            ],  
+            7 =>[
+             $mois8,
+             substr($tab12mois[7], -2),
+             $nomMois[7]
+            ],  
+            8 =>[
+             $mois9,
+             substr($tab12mois[8], -2),
+             $nomMois[8]
+            ],  
+            9 =>[
+             $mois10,
+             substr($tab12mois[9], -2),
+             $nomMois[9]
+            ],  
+            10 =>[
+             $mois11,
+             substr($tab12mois[10], -2),
+             $nomMois[10]
+            ],  
+            11 =>[
+             $mois12,
+             substr($tab12mois[11], -2),
+             $nomMois[11]
+            ]
+ 
+         ];
+
         $membres = $repoUser->findAll();
+        $nbMembres = count($repoUser->findAll());
+
         return $this->render('admin/membres.html.twig', [
         'user' => $this->getUser(),
-        'membres' => $membres
+        'membres' => $membres,
+        'tabGraph' => $tabGraph,
+        'nbMembres' => $nbMembres
         ]);
     }
 

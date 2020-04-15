@@ -231,7 +231,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 			-> getQuery() -> getResult();
 	}
 
+  public function findNumber($first)
+  {
+      $qb = $this->createQueryBuilder('u')
+          ->andWhere('u.register_at LIKE :first')
+          ->setParameter('first', $first . '%')
+          ->getQuery();
 
+      return $qb->execute();
+  }
+
+
+  public function findAllBefore($all)
+  {
+      $qb = $this->createQueryBuilder('u')
+          ->orderBy('u.register_at', 'ASC')
+          ->andWhere('u.register_at <= :all')
+          ->setParameter('all', $all . "-31")
+          ->getQuery();
+
+      return $qb->execute();
+  }
 
 
 

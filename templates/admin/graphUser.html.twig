@@ -1,0 +1,71 @@
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: [           '{{ tabGraph[0][2] }}',
+                            '{{ tabGraph[1][2] }}',
+                            '{{ tabGraph[2][2] }}', 
+                            '{{ tabGraph[3][2] }}',
+                            '{{ tabGraph[4][2] }}',
+                            '{{ tabGraph[5][2] }}',
+                            '{{ tabGraph[6][2] }}', 
+                            '{{ tabGraph[7][2] }}',
+                            '{{ tabGraph[8][2] }}',
+                            '{{ tabGraph[9][2] }}',
+                            '{{ tabGraph[10][2] }}',
+                            '{{ tabGraph[11][2] }}'],
+                            
+        datasets: [{
+            label: 'Nombre d\'inscrits',
+            backgroundColor: '#6495ED',
+            borderColor: 'black',
+            data: [             {{ tabGraph[0][0] }}, {{ tabGraph[1][0] }},
+                                {{ tabGraph[2][0] }}, {{ tabGraph[3][0] }},
+                                {{ tabGraph[4][0] }}, {{ tabGraph[5][0] }},
+                                {{ tabGraph[6][0] }}, {{ tabGraph[7][0] }},
+                                {{ tabGraph[8][0] }}, {{ tabGraph[9][0] }},
+                                {{ tabGraph[10][0] }}, {{ tabGraph[11][0] }}
+                    ]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+                        maintainAspectRatio: true,
+                        legend: {
+                            display: false
+                        },
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 10,
+                                top: 10,
+                                bottom: 10
+                            }
+                        },
+                        responsive: true,
+                             
+                        title: {
+                            display: false,
+                        },
+                        elements: {
+                            line: {
+                                borderWidth: 3
+                            },
+                            point: {
+                                radius: 4,
+                                hitRadius: 10,
+                                hoverRadius: 6
+                            }
+                        }
+                    }
+});
+</script>
+
+
