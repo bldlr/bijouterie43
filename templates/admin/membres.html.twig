@@ -4,25 +4,17 @@
 {% block monTitre %}Membres{% endblock %}
 {% block body %}
 
-
-        
-            <div class="col-md-6 mx-auto">
-                
-        
-                            <div class="overview-box clearfix">
-                            
-                                <div class="text-center">
-                                    <h2>{{ nbMembres}} inscrits</h2>
-                                </div>
-                            </div>
-                            <div class="overview-chart">
-                            {% include 'admin/graphUser.html.twig' %}
-                                {# <canvas id="widgetChart3"></canvas> #}
-                            </div>
-
-                       
+    <div class="col-md-6 mx-auto">
+        <div class="overview-box clearfix">
+            <div class="text-center">
+                <h2>{{ nbMembres}} inscrits</h2>
             </div>
-               
+        </div>
+        <div class="overview-chart">
+            {% include 'admin/graphUser.html.twig' %}
+        </div>
+    </div>
+
 
 
     <table class="table table-hover text-center">

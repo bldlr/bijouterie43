@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -365,8 +366,8 @@ class AdminController extends AbstractController
         $this->addFlash("suppressionUser", "La suppression a été effectuée");
         return $this->redirectToRoute("membres");
         }
-
     }
-    
+
+
 }
 
