@@ -44,6 +44,12 @@ public function findSearch(SearchData $search): array
         {
             $query = $query
             ->andWhere('p.nom LIKE :q')
+            ->orWhere('p.description LIKE :q')
+            ->orWhere('p.genre LIKE :q')
+            ->orWhere('p.matiere LIKE :q')
+            ->orWhere('p.prix LIKE :q')
+            ->orWhere('m.libelle LIKE :q')
+            ->orWhere('c.libelle LIKE :q')
             ->setParameter('q', "%{$search->q}%");
         }
 

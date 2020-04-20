@@ -80,6 +80,18 @@ class User implements UserInterface
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $departement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Region", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $region;
+
+    /**
      * @ORM\Column(type="string", length=25)
 	 * @Assert\Regex(
 	 *	pattern="/^0[1-9]([-. ]?[0-9]{2}){4}$/",
@@ -117,6 +129,7 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $statut;
+
 
 
 
@@ -310,5 +323,31 @@ class User implements UserInterface
     }
 
 
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+
+  
     
 }

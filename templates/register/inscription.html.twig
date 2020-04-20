@@ -40,7 +40,14 @@
             {{ form_row(form.ville) }}
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-6">
+            {{ form_row(form.region) }}
+            </div>
+            <div class="col-6">
+            {{ form_row(form.departement) }}
+            </div>
+        </div>
     {{ form_row(form.agreeTerms) }}
     <input type="submit" class="btn btn-info pr-4 pl-4" value="S'inscrire">
 {{form_end(form)}}
@@ -49,4 +56,46 @@
 
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<script>
+var $region = $('#user_form_region');
+
+$region.change(function() {
+
+var url = "{{ path('ajaxDepartement') }}";
+
+var data = {
+  'region': $region.val(),
+};
+  console.log(data);
+
+$.ajax({ 
+method: 'post',
+dataType: 'json',
+url: url,
+data: data,
+
+success: function (response) {
+
+var $dpt = response[0];
+console.log($dpt);
+
+ $("#user_form_departement").find('option').remove();
+$.each($dpt, function(index, k) {
+    $("#user_form_departement").append('<option value=' + k['id'] + '>' + k['nom'] + '</option>');
+});
+
+
+},
+error: function () {
+alert("erreur");
+}
+});
+
+});
+</script>
 {% endblock %}

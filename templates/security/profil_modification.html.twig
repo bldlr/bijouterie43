@@ -38,6 +38,15 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-6">
+            {{ form_row(userForm.region) }}
+            </div>
+            <div class="col-6">
+            {{ form_row(userForm.departement) }}
+            </div>
+        </div>
+
 
         <a href="{{ path('profil', { id : user.id }) }}" class=" btn btn-primary">Précédent</a>
         <button type="submit" class="btn btn-success float-right">Modifier le profil</button>
@@ -52,3 +61,47 @@
 
 
 {% endblock %}
+
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<script>
+var $region = $('#user_form_region');
+
+$region.change(function() {
+
+var url = "{{ path('ajaxDepartement') }}";
+
+var data = {
+  'region': $region.val(),
+};
+  console.log(data);
+
+$.ajax({ 
+method: 'post',
+dataType: 'json',
+url: url,
+data: data,
+
+success: function (response) {
+
+var $dpt = response[0];
+console.log($dpt);
+
+ $("#user_form_departement").find('option').remove();
+$.each($dpt, function(index, k) {
+    $("#user_form_departement").append('<option value=' + k['id'] + '>' + k['nom'] + '</option>');
+});
+
+
+},
+error: function () {
+alert("erreur");
+}
+});
+
+});
+</script>
+{% endblock %}
+

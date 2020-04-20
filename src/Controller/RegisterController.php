@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserFormType;
 use App\Service\EmailRegister;
+use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -120,6 +122,45 @@ class RegisterController extends AbstractController
 
         return $random;
     }
+
+
+        /**
+     *  @param Request $request
+     * @return JsonResponse $data
+     * @Route("/ajaxDepartement", name="ajaxDepartement")
+     */
+    public function ajaxDepartement(Request $request, DepartementRepository $repoDepartement): Response
+    {
+        $region = $request->request->get('region');
+        dump($region);
+        $departementByRegion = $repoDepartement->findDpt($region); dump($departementByRegion);
+
+        $data = $this->jsonForDepartement($departementByRegion);
+        return new JsonResponse($data);
+     
+    }
+
+
+    
+
+
+    /**
+     * Fonction que permet de créer un array des départements 
+     * @param array $dpt
+     * @return array $data
+     */
+    public function jsonForDepartement ($dpt)
+    {
+        $data = array ();
+        for ($i = 0; $i < count($dpt); $i++)
+        {
+           $dpt[$i] = array("nom"=>$dpt[$i]->getNom(),"id"=>$dpt[$i]->getId());
+           
+        }
+        array_push($data, $dpt);
+        return $data; dump($data);
+    }
+
 
 
 
