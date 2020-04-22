@@ -7,9 +7,13 @@ use App\Entity\Produit;
 use App\Data\SearchData;
 use App\Form\SearchForm;
 use App\Form\SearchType;
+use App\Repository\CategoriesRepository;
+use App\Repository\MarquesRepository;
 use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProduitsController extends AbstractController
@@ -19,11 +23,12 @@ class ProduitsController extends AbstractController
     /**
      * @Route("/bijoux", name="bijoux")
      */
-    public function bijoux(ProduitRepository $repoProduit, Request $request)
+    public function bijoux(ProduitRepository $repoProduit,  Request $request)
     {
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
+       
 
         $quantitePage = 12;// nombre de produits par page
         //$produits = $repoProduit->findAll();
@@ -51,16 +56,66 @@ class ProduitsController extends AbstractController
         // $start = ($pageCourante-1)*$quantitePage; // debut de chaque page, le premier chiffre de la limite
         // }
         $produits = $repoProduit->findSearch($data);
-        dump($produits);
+        //dump($produits);
         return $this->render('produits/produits.html.twig', [
         'produits' => $produits,
         'user' => $this->getUser(),
-        'form' => $form->createView(),
+        'form' => $form->createView()
         // 'nbPage' => $nbPage,
         // 'pageCourante' => $pageCourante
         
         ]);
     }
+
+
+    /**
+     * Fonction qui est appelée dans le script du Twig Produits et qui renvoie un array pour l'autocomplémentation
+     * 
+     *  @param Request $request
+     * @return JsonResponse $data
+     * @Route("/ajaxAutocomplete", name="ajaxAutocomplete")
+     */
+    public function ajaxAutocomplete(ProduitRepository $repoProduit, MarquesRepository $repoMarque, CategoriesRepository $repoCategorie)
+    {
+        $nomsProduits = $repoProduit->findNom();
+        $marquesProduits = $repoMarque->findMarques();
+        $categoriesProduits = $repoCategorie->findCategories();
+
+        $data = $this->jsonAutocomplete($nomsProduits, $marquesProduits, $categoriesProduits);
+        return new JsonResponse($data);
+     
+    }
+
+    
+    /**
+     * Fonction que permet de récupérer un array des noms marques et catégories de bijoux pour l'autocomplémentation
+     * 
+     * @param array $dpt
+     * @return array $data
+     */
+    public function jsonAutocomplete ($nom, $marque, $categorie)
+    {
+        $data = array ();
+        for ($i = 0; $i < count($nom); $i++)
+        {
+            $data[$i] = $nom[$i]['nom'] ;
+        }
+
+        for ($i = 0; $i < count($marque); $i++)
+        {
+            $data[$i] = $marque[$i]['libelle'] ;
+        }
+
+        for ($i = 0; $i < count($categorie); $i++)
+        {
+            $data[$i] = $categorie[$i]['libelle'] ;
+        }
+
+        return $data;
+
+    }
+
+
 
 
     /**

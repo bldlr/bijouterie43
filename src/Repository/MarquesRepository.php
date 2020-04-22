@@ -19,6 +19,16 @@ class MarquesRepository extends ServiceEntityRepository
         parent::__construct($registry, Marques::class);
     }
 
+
+    public function findMarques()
+{
+    return $this->createQueryBuilder('m')
+        ->select("m.libelle")
+        //->setMaxResults(50)
+        ->getQuery()
+        ->getResult()
+    ;
+}
     // /**
     //  * @return Marques[] Returns an array of Marques objects
     //  */

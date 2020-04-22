@@ -19,6 +19,16 @@ class CategoriesRepository extends ServiceEntityRepository
         parent::__construct($registry, Categories::class);
     }
 
+    public function findCategories()
+    {
+        return $this->createQueryBuilder('c')
+            ->select("c.libelle")
+            //->setMaxResults(50)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Categories[] Returns an array of Categories objects
     //  */

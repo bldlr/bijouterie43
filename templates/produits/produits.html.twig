@@ -84,3 +84,32 @@ let ias = new InfiniteAjaxScroll('.containerInfini', { // CONTAINER : LA PARTIE 
 </script> #}
 
 {% endblock %}
+
+{% block javascripts %}
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+
+    var url = "{{ path('ajaxAutocomplete') }}";
+    $.ajax({
+        method : 'get',
+        url : url,
+
+    success: function (response)
+    {
+        var arrayAutocomplete = response;
+        console.log (arrayAutocomplete);
+
+    $( "#q" ).autocomplete({
+      source: arrayAutocomplete,
+      minLength: 2,
+      delay: 200
+    });
+    }
+
+    })
+  } );
+  </script>
+{% endblock %}

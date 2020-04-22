@@ -22,9 +22,18 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function findNom()
+{
+    return $this->createQueryBuilder('p')
+        ->select("p.nom")
+        //->setMaxResults(50)
+        ->getQuery()
+        ->getResult()
+    ;
+}
+
 
    
-
 
 /**
  * Récupère les produits en lien avec la recherche
