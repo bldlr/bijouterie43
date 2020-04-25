@@ -19,10 +19,12 @@
             <div class="containerInfini">
                 <div class="row itemInfini">
                 {% for produit in produits %}
-                    {% include 'produits/_card.html.twig' with {produit: produit} only %}
-                    <!-- PARTIE CARD DES PRODUITS -->
-                    
+                            {% include 'produits/_card.html.twig' with {produit: produit} only %}
+                            <!-- PARTIE CARD DES PRODUITS -->
                 {% endfor %}
+
+
+                
 
 
                 </div>

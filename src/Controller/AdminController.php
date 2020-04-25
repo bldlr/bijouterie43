@@ -7,6 +7,7 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\UserRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\RegionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -142,9 +143,20 @@ class AdminController extends AbstractController
      * 
      * @Route("/membres", name="membres")
      */
-    public function membres(UserRepository $repoUser)
+    public function membres(UserRepository $repoUser, RegionRepository $repoRegion)
     {
 
+        $regions = $repoRegion->findAll();
+        //dump($regions);
+        // $whoRegion = [];
+        // foreach($regions as $reg)
+        // {
+        //     $id = $reg->getId();
+        //     $whoRegion[] = $id;
+            
+        // }
+        //dump($re); 
+        //dump($whoRegion);die;
 
          // GRAPHIQUE
          $moisActuel = date("m"); // clé de départ, définir le mois actuel qui sera le mois de la dernière position du tableau
@@ -347,7 +359,8 @@ class AdminController extends AbstractController
         'user' => $this->getUser(),
         'membres' => $membres,
         'tabGraph' => $tabGraph,
-        'nbMembres' => $nbMembres
+        'nbMembres' => $nbMembres,
+        'regions' => $regions
         ]);
     }
 
@@ -367,7 +380,6 @@ class AdminController extends AbstractController
         return $this->redirectToRoute("membres");
         }
     }
-
 
 }
 

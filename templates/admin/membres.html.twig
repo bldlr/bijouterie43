@@ -4,7 +4,13 @@
 {% block monTitre %}Membres{% endblock %}
 {% block body %}
 
-    <div class="col-md-6 mx-auto">
+
+<div class="row">
+    <div class="col-md-6">
+        {% include 'admin/franceMap.html.twig' %}
+    </div>
+
+    <div class="col-md-6">
         <div class="overview-box clearfix">
             <div class="text-center">
                 <h2>{{ nbMembres}} inscrits</h2>
@@ -14,6 +20,11 @@
             {% include 'admin/graphUser.html.twig' %}
         </div>
     </div>
+
+
+</div>
+
+
 
 
 

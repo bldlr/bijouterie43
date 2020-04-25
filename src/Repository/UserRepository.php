@@ -42,6 +42,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
 
 
+    public function findRegion($u){
+
+      $builder = $this->createQueryBuilder('u');
+  
+      return $builder
+          -> select('u')
+          -> andWhere('u.region = :reg')
+          -> setParameter('reg', $u)
+      -> getQuery()
+      -> getResult();
+      }
 
 
 
